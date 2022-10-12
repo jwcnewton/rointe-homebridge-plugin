@@ -1,0 +1,59 @@
+{
+  "pluginAlias": "Rointe Unoffical",
+  "pluginType": "platform",
+  "singular": true,
+  "headerDisplay": "Homebridge plugin to control Rointe devices",
+  "footerDisplay": "For help and support please visit (http://github.com/jwcnewton/rointe-homebridge-plugin)",
+  "schema": {
+    "type": "object",
+    "properties": {
+      "username": {
+        "type": "string",
+        "title": "Username",
+        "description": "The username used to register on the Rointe App usually an email address."
+      },
+      "password": {
+        "type": "string",
+        "title": "Password",
+        "description": "The password used to register on the Rointe App."
+      },
+      "installation_name": {
+        "type": "string",
+        "title": "installation_name",
+        "description": "The installation_name setup via the Rointe app"
+      },
+      "updateInterval": {
+        "title": "Update Interval",
+        "type": "integer",
+        "default": 15,
+        "placeholder": "15",
+        "description": "The interval to get updates at (seconds)."
+      }
+    },
+    "required": [
+      "username",
+      "password",
+      "installation_name"
+    ]
+  },
+  "layout": [
+    {
+      "type": "fieldset",
+      "title": "Required Settings",
+      "description": "These are the basic credentials that are required for this plugin to work.",
+      "items": [
+        "username",
+        "password",
+        "installation_name"
+      ]
+    },
+    {
+      "type": "fieldset",
+      "title": "Optional Settings",
+      "description": "Optional settings.",
+      "items": [
+        "updateInterval"
+      ]
+    }
+  ]
+}

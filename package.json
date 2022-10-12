@@ -1,0 +1,40 @@
+{
+  "name": "homebridge-rointe-unofficial",
+  "version": "1.0.0",
+  "description": "An unofficial rointe plugin for homebridge",
+  "main": "dist/index.js",
+  "scripts": {
+    "debug": "rimraf dist/ && tsc && npm link",
+    "build": "rimraf dist/ && tsc",
+    "prepublishOnly": "npm run build"
+  },
+  "author": "Jonathan Newton <jwcnewton@gmail.com>",
+  "engines": {
+    "homebridge": ">=1.0.0"
+  },
+  "license": "ISC",
+  "files": [
+    "LICENSE",
+    "dist"
+  ],
+  "keywords": [
+    "homebridge-plugin"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/jwcnewton/rointe-homebridge-plugin.git"
+  },
+  "bugs": {
+    "url": "http://github.com/jwcnewton/rointe-homebridge-plugin/issues"
+  },
+  "devDependencies": {
+    "@types/node": "^10.17.19",
+    "homebridge": "^1.0.4",
+    "rimraf": "^3.0.2",
+    "typescript": "^3.8.3"
+  },
+  "dependencies": {
+    "homebridge-framework": "1.0.6",
+    "rointe-sdk": "latest"
+  }
+}
