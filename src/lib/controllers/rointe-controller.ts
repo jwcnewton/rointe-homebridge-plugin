@@ -8,7 +8,6 @@ export class RointeController {
     public name: string;
     private rointeCurrentTemperature: Characteristic<number>;
     private rointeTargetTemperature: Characteristic<number>;
-    private rointeCurrentCoolingStateChange: Characteristic<number>;
     private rointeTargetCoolingStateChange: Characteristic<number>;
     private rointeDisplayUnit: Characteristic<number>;
 
@@ -32,7 +31,6 @@ export class RointeController {
 
         this.rointeCurrentTemperature = rointeRadiatorService.useCharacteristic<number>(Homebridge.Characteristics.CurrentTemperature);
         this.rointeTargetTemperature = rointeRadiatorService.useCharacteristic<number>(Homebridge.Characteristics.TargetTemperature);
-        this.rointeCurrentCoolingStateChange = rointeRadiatorService.useCharacteristic<number>(Homebridge.Characteristics.CurrentHeatingCoolingState);
         this.rointeTargetCoolingStateChange = rointeRadiatorService.useCharacteristic<number>(Homebridge.Characteristics.TargetHeatingCoolingState);
 
         this.rointeDisplayUnit = rointeRadiatorService.useCharacteristic<number>(Homebridge.Characteristics.TemperatureDisplayUnits)
@@ -43,12 +41,8 @@ export class RointeController {
             await this.platform.apiClient.setDeviceTempAsync(this.device_id, newValue);
         }
 
-        this.rointeCurrentCoolingStateChange.valueChanged = async newValue => {
-            console.log(newValue); // TODO: Add quick state
-        }
-
         this.rointeTargetCoolingStateChange.valueChanged = async newValue => {
-            console.log(newValue); // TODO: Add quick state
+            await this.platform.apiClient.setDeviceTempAsync(this.device_id, device.data.temp, (newValue != 0));
         }
         
         this.update(device);
@@ -67,5 +61,6 @@ export class RointeController {
 
     public update(device: DeviceModel) {
         this.rointeCurrentTemperature.value = device.data.temp;
+        this.rointeTargetCoolingStateChange.value = device.data.power ? 1 : 0;
     }
 }

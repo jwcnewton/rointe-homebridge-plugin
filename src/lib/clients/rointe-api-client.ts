@@ -39,9 +39,9 @@ export class RointeApiClient {
         return (await this._rointe_api.get_device(device_id)).data;
     }
 
-    async setDeviceTempAsync(device_id: string, temp: number): Promise<DeviceModel> {
+    async setDeviceTempAsync(device_id: string, temp: number, power: boolean = true): Promise<DeviceModel> {
         await this.setupRointeApi();
-        return (await this._rointe_api.set_device_temp(device_id, temp)).data;
+        return (await this._rointe_api.set_device_temp(device_id, temp, power)).data;
     }
 
     async setupRointeApi() {
