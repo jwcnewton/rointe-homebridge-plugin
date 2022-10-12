@@ -19,8 +19,8 @@ export class RointeController {
 
         // Creates the accessory
         const rointeRadiatorAccessory = platform.useAccessory(device.data.name, device.data.name);
-        const rointeRadiatorService = rointeRadiatorAccessory.useService(Homebridge.Services.Thermostat, device.data.name);
-
+        const rointeRadiatorService = rointeRadiatorAccessory.useService(Homebridge.Services.Thermostat, device.data.name, device.data.name+'thermo');
+        
         rointeRadiatorAccessory.setInformation({
             manufacturer: 'Rointe',
             model: 'Radiator',
@@ -41,6 +41,10 @@ export class RointeController {
             await this.platform.apiClient.setDeviceTempAsync(this.device_id, newValue);
         }
 
+        this.rointeTargetCoolingStateChange.setProperties(<any>{
+            validValues: [0, 1]
+        });
+        
         this.rointeTargetCoolingStateChange.valueChanged = async newValue => {
             await this.platform.apiClient.setDeviceTempAsync(this.device_id, device.data.temp, (newValue != 0));
         }
