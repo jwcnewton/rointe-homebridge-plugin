@@ -1,6 +1,6 @@
 <span align="center">
 
-<img alt="homebridge-rointe" src="./docs/rointe-homebridge.png" width="500px">
+<img alt="homebridge-rointe" src="./docs/rointe-homebridge.png" width="500px" />
 
 # @jwcnewton/homebridge-rointe-unofficial
 
