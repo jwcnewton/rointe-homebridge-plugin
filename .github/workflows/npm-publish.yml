@@ -1,3 +1,4 @@
+name: npm-publish
 on:
   workflow_run:
     workflows: ["npm-build"]
