@@ -1,6 +1,14 @@
-# homebridge-rointe-unofficial
+<span align="center">
 
-This plugin exposes Rointe installations to HomeKit, this is developed and maintained in my free time to learn typescript.
+<img alt="homebridge-rointe" src="./docs/rointe-homebridge.png" width="500px">
+
+# @jwcnewton/homebridge-rointe-unofficial
+
+<p>This plugin exposes Rointe installations to <a href="https://homebridge.io">Homebridge</a>, this is developed and maintained in my free time to learn typescript. 
+</p>
+
+</span>
+
 
 ## Configuration
 
