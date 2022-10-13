@@ -11,7 +11,8 @@
   },
   "author": "Jonathan Newton <jwcnewton@gmail.com>",
   "engines": {
-    "homebridge": ">=1.0.0"
+    "homebridge": ">=1.0.0",
+    "node": ">=14.18.1"
   },
   "license": "ISC",
   "files": [
