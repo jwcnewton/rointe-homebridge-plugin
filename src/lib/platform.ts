@@ -48,6 +48,10 @@ export class Platform extends HomebridgePlatform<Configuration> {
             this.configuration.updateInterval = 5;
         }
 
+        if (this.configuration.installation_name == null) {
+            this.logger.info(`Please set an installation name.`);
+        }
+
         // Initializes the client
         this._apiClient = new RointeApiClient(this);
         await this._apiClient.initialize();

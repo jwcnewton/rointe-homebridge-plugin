@@ -21,27 +21,38 @@ export class RointeApiClient {
     }
 
     async getDevicesAsync(): Promise<Array<DeviceModel>> {
-        const localId = (await this._rointe_api.get_local_id()).data;
-        const devices = <Array<Device>>(await this._rointe_api.get_all_devices_by_installation_name(localId,
-            this.platform.configuration.installation_name)).data
-
         const results: Array<DeviceModel> = []
-        for (let device of devices) {
-            const device_model = <DeviceModel>(await this._rointe_api.get_device(device.device_id)).data
-            device_model.device_id = device.device_id;
-            results.push(device_model)
+        try {
+            const localId = (await this._rointe_api.get_local_id()).data;
+            const devices = <Array<Device>>(await this._rointe_api.get_all_devices_by_installation_name(localId,
+                this.platform.configuration.installation_name)).data
+            for (let device of devices) {
+                const device_model = <DeviceModel>(await this._rointe_api.get_device(device.device_id)).data
+                device_model.device_id = device.device_id;
+                results.push(device_model)
+            }
+        } catch (err) {
+            this.platform.logger.error(`Error fetching devices: ${err}`); 
         }
         return results
     }
 
-    async getDeviceAsync(device_id: string): Promise<DeviceModel> {
-        await this.setupRointeApi();
-        return (await this._rointe_api.get_device(device_id)).data;
+    async getDeviceAsync(device_id: string): Promise<DeviceModel | null> {
+        try {
+            return (await this._rointe_api.get_device(device_id)).data;
+        } catch (err) {
+            this.platform.logger.error(`Error fetching device info: ${err}`); 
+        }
+        return null;
     }
 
-    async setDeviceTempAsync(device_id: string, temp: number, power: boolean = true): Promise<DeviceModel> {
-        await this.setupRointeApi();
-        return (await this._rointe_api.set_device_temp(device_id, temp, power)).data;
+    async setDeviceTempAsync(device_id: string, temp: number, power: boolean = true): Promise<DeviceModel | null> {
+        try {
+            return (await this._rointe_api.set_device_temp(device_id, temp, power)).data;
+        } catch (err) {
+            this.platform.logger.error(`Error setting device temp: ${err}`);
+        }
+        return null;
     }
 
     async setupRointeApi() {
