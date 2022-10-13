@@ -25,6 +25,12 @@ Key | Example | Description
 
 Setup homebridge locally [here](https://github.com/homebridge/homebridge#plugin-development) then run `npm run debug` 
 
+<p align="center">
+  <img alt="one" src="./docs/1.jpeg" height="600px" width="45%">
+&nbsp; &nbsp; &nbsp; &nbsp;
+  <img alt="two" src="./docs/2.jpeg"  height="600px"  width="45%">
+</p>
+
 ## Note
  - Please raise bugs with as much details as possible 
  - Currently this only works with a single Rointe installation 
