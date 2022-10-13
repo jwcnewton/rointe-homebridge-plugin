@@ -18,4 +18,4 @@ Setup homebridge locally [here](https://github.com/homebridge/homebridge#plugin-
 ## Note
  - Please raise bugs with as much details as possible 
  - Currently this only works with a single Rointe installation 
- - Features can be added anything outside of the standard thermostat - *raise a bug in*: [rointe-sdk-node](https://github.com/jwcnewton/rointe-sdk-node)
+ - UI Features can be added but anything outside of the standard thermostat - *raise a bug in*: [rointe-sdk-node](https://github.com/jwcnewton/rointe-sdk-node)

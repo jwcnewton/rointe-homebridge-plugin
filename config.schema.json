@@ -1,5 +1,5 @@
 {
-  "pluginAlias": "Rointe Unoffical",
+  "pluginAlias": "Rointe Unofficial",
   "pluginType": "platform",
   "singular": true,
   "headerDisplay": "Homebridge plugin to control Rointe devices",
