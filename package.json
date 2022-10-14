@@ -1,6 +1,6 @@
 {
   "name": "homebridge-rointe-unofficial",
-  "version": "1.1.5",
+  "version": "1.1.6",
   "description": "An unofficial rointe plugin for homebridge",
   "main": "dist/index.js",
   "scripts": {
@@ -14,7 +14,7 @@
     "homebridge": ">=1.0.0",
     "node": ">=14.18.1"
   },
-  "license": "ISC",
+  "license": "Apache-2.0",
   "files": [
     "LICENSE",
     "config.schema.json",

@@ -4,7 +4,11 @@
 <img alt="homebridge-rointe" src="./docs/rointe-homebridge.png" width="500px" >
 </p>
 
-# @jwcnewton/homebridge-rointe-unofficial
+# @jwcnewton/homebridge-rointe-unofficial 
+
+
+[![verified-by-homebridge](https://badgen.net/badge/homebridge/verified/purple)](https://github.com/homebridge/homebridge/wiki/Verified-Plugins)
+[![npm](https://img.shields.io/npm/dt/homebridge-rointe-unofficial.svg)](https://www.npmjs.com/package/homebridge-rointe-unofficial)
 
 <p>This plugin exposes Rointe installations to <a href="https://homebridge.io">Homebridge</a>, this is developed and maintained in my free time to learn typescript. 
 </p>
@@ -35,3 +39,5 @@ Setup homebridge locally [here](https://github.com/homebridge/homebridge#plugin-
  - Please raise bugs with as much details as possible 
  - Currently this only works with a single Rointe installation 
  - UI Features can be added but anything outside of the standard thermostat - *raise a bug in*: [rointe-sdk-node](https://github.com/jwcnewton/rointe-sdk-node)
+
+## 
