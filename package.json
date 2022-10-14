@@ -7,7 +7,8 @@
     "debug": "rimraf dist/ && tsc && npm link",
     "build": "rimraf dist/ && tsc",
     "prepublishOnly": "npm run build",
-    "lint": "eslint src/**.ts --max-warnings=0"
+    "lint": "eslint src/**.ts --max-warnings=0",
+    "release": "release-it"
   },
   "author": "Jonathan Newton <jwcnewton@gmail.com>",
   "engines": {
@@ -36,6 +37,7 @@
     "@typescript-eslint/parser": "^5.0.0",
     "eslint": "^8.0.1",
     "homebridge": "1.5.0",
+    "release-it": "^15.5.0",
     "rimraf": "^3.0.2",
     "typescript": "4.0.5"
   },
@@ -44,7 +46,7 @@
     "rointe-sdk": "1.0.2"
   },
   "funding": {
-    "type" : "paypal",
-    "url" : "https://paypal.me/jwcnewton"
+    "type": "paypal",
+    "url": "https://paypal.me/jwcnewton"
   }
 }
