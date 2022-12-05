@@ -32,7 +32,6 @@ export class RointeController {
         this.rointeCurrentTemperature = rointeRadiatorService.useCharacteristic<number>(Homebridge.Characteristics.CurrentTemperature);
         this.rointeTargetTemperature = rointeRadiatorService.useCharacteristic<number>(Homebridge.Characteristics.TargetTemperature);
         this.rointeTargetCoolingStateChange = rointeRadiatorService.useCharacteristic<number>(Homebridge.Characteristics.TargetHeatingCoolingState);
-
         this.rointeDisplayUnit = rointeRadiatorService.useCharacteristic<number>(Homebridge.Characteristics.TemperatureDisplayUnits)
 
         this.rointeDisplayUnit.value = Homebridge.Characteristics.TemperatureDisplayUnits.CELSIUS
@@ -46,9 +45,10 @@ export class RointeController {
         });
         
         this.rointeTargetCoolingStateChange.valueChanged = async newValue => {
-            await this.platform.apiClient.setDeviceTempAsync(this.device_id, device.data.temp, (newValue != 0));
+            let targetTemp: number = this.rointeTargetTemperature.value || device.data.temp;
+            await this.platform.apiClient.setDeviceTempAsync(this.device_id, targetTemp, (newValue != 0));
         }
-        
+   
         this.update(device);
         platform.logger.info(`[${device.data.name}] Initialized`);
     }
