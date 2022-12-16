@@ -43,7 +43,7 @@
   },
   "dependencies": {
     "homebridge-framework": "1.0.6",
-    "rointe-sdk": "1.0.2"
+    "rointe-sdk": "1.0.3"
   },
   "funding": {
     "type": "paypal",
