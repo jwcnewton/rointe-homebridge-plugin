@@ -1,6 +1,6 @@
 {
   "name": "homebridge-rointe-unofficial",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "An unofficial rointe plugin for homebridge",
   "main": "dist/index.js",
   "scripts": {
