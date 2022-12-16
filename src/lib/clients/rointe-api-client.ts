@@ -32,6 +32,10 @@ export class RointeApiClient {
                 results.push(device_model)
             }
         } catch (err) {
+            if (err instanceof Error) {
+                this.platform.logger.error(`Error fetching devices (Stack): ${err.stack}`); 
+                this.platform.logger.error(`Error fetching devices (Name): ${err.name}`);
+            } 
             this.platform.logger.error(`Error fetching devices: ${err}`); 
         }
         return results
