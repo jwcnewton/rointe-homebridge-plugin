@@ -61,7 +61,10 @@ export class RointeApiClient {
 
     async setupRointeApi() {
         if (this._rointe_api == null) {
-            this._rointe_api = <RointeApi>new api(this.platform.configuration.username, this.platform.configuration.password);
+            this.platform.logger.info(`USE ROINTE = ${this.platform.configuration.useRointeBackend}`);
+            this._rointe_api = <RointeApi>new api(this.platform.configuration.username, 
+                this.platform.configuration.password,
+                this.platform.configuration.useRointeBackend);
             await this._rointe_api.initialize_authentication();
         }
     }

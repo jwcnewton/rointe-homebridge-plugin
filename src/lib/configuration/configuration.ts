@@ -7,4 +7,5 @@ export interface Configuration {
     installation_name: string;
     devices: Array<DeviceModel>;
     updateInterval: number;
+    useRointeBackend: string;
 }

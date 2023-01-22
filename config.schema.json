@@ -28,6 +28,13 @@
         "default": 15,
         "placeholder": "15",
         "description": "The interval to get updates at (seconds)."
+      },
+      "useRointeBackend": {
+        "title": "Use rointe backend",
+        "type": "boolean",
+        "default": true,
+        "placeholder": "true",
+        "description": "If false will attempt to use equation (very experimental)"
       }
     },
     "required": [
@@ -52,7 +59,8 @@
       "title": "Optional Settings",
       "description": "Optional settings.",
       "items": [
-        "updateInterval"
+        "updateInterval",
+        "useRointeBackend"
       ]
     }
   ]
