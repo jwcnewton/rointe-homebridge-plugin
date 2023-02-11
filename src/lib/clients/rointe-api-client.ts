@@ -1,12 +1,11 @@
-const api = require("rointe-sdk");
+import { init, login, FirebaseConfig, InstallationsType, getInstallations, InstallationType, getDevice, setDevicePower, updateDeviceTemperature } from "equation-connect";
 import { Platform } from '../platform';
-import { Device } from './models/device';
-import { DeviceModel } from './models/device-model';
-import { RointeApi } from './models/rointe-api';
+import { User } from './models/user';
+import { ConnectDeviceType } from './models/types';
 
 export class RointeApiClient {
     private static _instance: RointeApiClient;
-    private _rointe_api!: RointeApi;
+    private _rointe_user!: User;
 
     async initialize() {
         await this.setupRointeApi()
@@ -20,39 +19,60 @@ export class RointeApiClient {
         RointeApiClient._instance = this;
     }
 
-    async getDevicesAsync(): Promise<Array<DeviceModel>> {
-        const results: Array<DeviceModel> = []
+    async getDevicesAsync(): Promise<Array<ConnectDeviceType>> {
+        const results: Array<ConnectDeviceType> = []
         try {
-            const localId = (await this._rointe_api.get_local_id()).data;
-            const devices = <Array<Device>>(await this._rointe_api.get_all_devices_by_installation_name(localId,
-                this.platform.configuration.installation_name)).data
-            for (let device of devices) {
-                const device_model = <DeviceModel>(await this._rointe_api.get_device(device.device_id)).data
-                device_model.device_id = device.device_id;
-                results.push(device_model)
+            const installations = Array<InstallationsType>(await getInstallations(this._rointe_user.uid));
+
+            const installation = <InstallationType>this.getInstallationByName(installations, this.platform.configuration.installation_name);
+            if (installation == null) {
+                return results;
+            }
+
+            const zone_keys = Object.keys(installation.zones);
+            for (let i = 0; i < zone_keys.length; i++) {
+                const zone = installation.zones[zone_keys[i]]
+
+                if (zone.devices != null) {
+                    const devices = Object.keys(zone.devices);
+
+                    for (let j = 0; j < devices.length; j++) {
+                        const device_id = devices[j];
+                        const device = await this.getDeviceAsync(device_id);
+                        if (device != null) {
+                            results.push(device);
+                        }
+
+                    }
+                }
             }
         } catch (err) {
             if (err instanceof Error) {
-                this.platform.logger.error(`Error fetching devices (Stack): ${err.stack}`); 
+                this.platform.logger.error(`Error fetching devices (Stack): ${err.stack}`);
                 this.platform.logger.error(`Error fetching devices (Name): ${err.name}`);
-            } 
-            this.platform.logger.error(`Error fetching devices: ${err}`); 
+            }
+            this.platform.logger.error(`Error fetching devices: ${err}`);
         }
         return results
     }
 
-    async getDeviceAsync(device_id: string): Promise<DeviceModel | null> {
+
+    async getDeviceAsync(device_id: string): Promise<ConnectDeviceType | null> {
         try {
-            return (await this._rointe_api.get_device(device_id)).data;
+            const device = (await getDevice(device_id))
+            return { device_id, ...device };
         } catch (err) {
-            this.platform.logger.error(`Error fetching device info: ${err}`); 
+            this.platform.logger.error(`Error fetching device info: ${err}`);
         }
         return null;
     }
 
-    async setDeviceTempAsync(device_id: string, temp: number, power: boolean = true): Promise<DeviceModel | null> {
+    async setDeviceTempAsync(device_id: string, temp: number, power: boolean = true): Promise<ConnectDeviceType | null> {
         try {
-            return (await this._rointe_api.set_device_temp(device_id, temp, power)).data;
+            await setDevicePower(device_id, power);
+            await updateDeviceTemperature(device_id, temp);
+            const device = (await getDevice(device_id))
+            return { device_id, ...device };
         } catch (err) {
             this.platform.logger.error(`Error setting device temp: ${err}`);
         }
@@ -60,12 +80,29 @@ export class RointeApiClient {
     }
 
     async setupRointeApi() {
-        if (this._rointe_api == null) {
+        if (this._rointe_user == null) {
             this.platform.logger.info(`USE ROINTE = ${this.platform.configuration.useRointeBackend}`);
-            this._rointe_api = <RointeApi>new api(this.platform.configuration.username, 
-                this.platform.configuration.password,
-                this.platform.configuration.useRointeBackend);
-            await this._rointe_api.initialize_authentication();
+            if (this.platform.configuration.useRointeBackend) {
+                init(FirebaseConfig.RointeConnect);
+            } else {
+                init(FirebaseConfig.EquationConnect);
+            }
+            this._rointe_user = await login(this.platform.configuration.username, this.platform.configuration.password);
         }
+    }
+
+    getInstallationByName(installations: Array<InstallationsType>, installation_name: String): InstallationType | null {
+        var installationsType = null;
+        installations.forEach(installation => {
+            const installationKeys = Object.keys(installation);
+            installationKeys.forEach(installationKey => {
+                const _installationType = <InstallationType>installation[installationKey];
+                if (_installationType.name == installation_name) {
+                    installationsType = _installationType;
+                }
+            });
+        });
+
+        return installationsType;
     }
 }

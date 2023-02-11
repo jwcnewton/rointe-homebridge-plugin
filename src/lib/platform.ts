@@ -3,12 +3,11 @@ import { HomebridgePlatform } from 'homebridge-framework';
 import { Configuration } from './configuration/configuration';
 import { RointeController } from './controllers/rointe-controller';
 import { RointeApiClient } from './clients/rointe-api-client';
-import { DeviceModel } from './clients/models/device-model';
-
+import { ConnectDeviceType } from './clients/models/types';
 
 export class Platform extends HomebridgePlatform<Configuration> {
     private updateHandle: any = null;
-    public devices = new Array<DeviceModel>();
+    public devices = new Array<ConnectDeviceType>();
     public controllers = new Array<RointeController>();
 
     public get pluginName(): string {
@@ -33,7 +32,7 @@ export class Platform extends HomebridgePlatform<Configuration> {
                 await controller.updateAsync();
             }
             this.logger.debug('Rointe device synced from the API.');
-        } catch (e) {
+        } catch {
             this.logger.warn('Failed Rointe device synced from the API.');
         }
     }

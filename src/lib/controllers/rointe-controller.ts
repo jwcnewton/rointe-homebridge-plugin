@@ -1,7 +1,7 @@
 
 import { Platform } from '../platform';
-import { DeviceModel } from '../clients/models/device-model';
 import { Homebridge, Characteristic } from 'homebridge-framework';
+import { ConnectDeviceType } from '../clients/models/types';
 
 export class RointeController {
     public device_id: string;
@@ -11,7 +11,7 @@ export class RointeController {
     private rointeTargetCoolingStateChange: Characteristic<number>;
     private rointeDisplayUnit: Characteristic<number>;
 
-    constructor(private platform: Platform, device: DeviceModel) {
+    constructor(private platform: Platform, device: ConnectDeviceType) {
         platform.logger.info(`[${device.data.name}] Initializing...`);
 
         this.device_id = device.device_id;
@@ -56,14 +56,14 @@ export class RointeController {
     public async updateAsync() {
         try {
             this.platform.logger.debug(`Syncing Rointe Device with ID ${this.name} from the API...`);
-            const device_model = <DeviceModel> await this.platform.apiClient.getDeviceAsync(this.device_id);
+            const device_model = <ConnectDeviceType> await this.platform.apiClient.getDeviceAsync(this.device_id);
             this.update(device_model);
-        } catch (e) {
+        } catch {
             this.platform.logger.warn(`Failed to sync Rointe Device with ID ${this.device_id} from API.`);
         }
     }
 
-    public update(device: DeviceModel) {
+    public update(device: ConnectDeviceType) {
         this.rointeCurrentTemperature.value = device.data.temp;
         this.rointeTargetCoolingStateChange.value = device.data.power ? 1 : 0;
     }
