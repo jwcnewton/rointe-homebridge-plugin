@@ -82,7 +82,9 @@ export class RointeApiClient {
     async setupRointeApi() {
         if (this._rointe_user == null) {
             this.platform.logger.info(`USE ROINTE = ${this.platform.configuration.useRointeBackend}`);
-            if (this.platform.configuration.useRointeBackend) {
+            if(this.platform.configuration.useRointeBackend == null){
+                init(FirebaseConfig.RointeConnect);
+            } else if (this.platform.configuration.useRointeBackend) {
                 init(FirebaseConfig.RointeConnect);
             } else {
                 init(FirebaseConfig.EquationConnect);
