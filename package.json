@@ -4,8 +4,8 @@
   "description": "An unofficial rointe plugin for homebridge",
   "main": "dist/index.js",
   "scripts": {
-    "debug": "rimraf dist/ && tsc && npm link",
-    "build": "rimraf dist/ && tsc",
+    "debug": "rimraf -G dist/ && tsc && npm link",
+    "build": "rimraf -G dist/ && tsc",
     "prepublishOnly": "npm run build",
     "lint": "eslint src/**.ts --max-warnings=0",
     "release": "release-it"
@@ -36,14 +36,15 @@
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "@typescript-eslint/parser": "^5.0.0",
     "eslint": "^8.0.1",
-    "homebridge": "1.5.0",
-    "release-it": "^15.5.0",
+    "homebridge": "^1.8.5",
+    "release-it": "^18.1.1",
     "rimraf": "^3.0.2",
-    "typescript": "^4.9.5"
+    "typescript": "^4.9.5",
+    "wildcard-match": "5.1.4"
   },
   "dependencies": {
-    "equation-connect": "^1.7.0",
-    "homebridge-framework": "1.0.6",
+    "equation-connect": "1.7.0",
+    "homebridge-framework": "2.1.0",
     "rointe-sdk": "1.0.3"
   },
   "funding": {
